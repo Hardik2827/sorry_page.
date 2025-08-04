@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I’m Really Sorry 💔</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #d63384;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .question {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .question h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #yesBtn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #dc3545;
+      color: white;
+      position: relative;
+    }
+
+    .emoji {
+      position: fixed;
+      font-size: 24px;
+      animation: fall 4s linear infinite;
+      user-select: none;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .burst-emoji {
+      position: absolute;
+      font-size: 24px;
+      animation: burst 1s ease-out forwards;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes burst {
+      0% { transform: scale(1) translate(0, 0); opacity: 1; }
+      100% { transform: scale(1.5) translate(var(--x), var(--y)); opacity: 0; }
+    }
+
+    .thank-you {
+      font-size: 1.8rem;
+      color: #ff1493;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>My Apology Letter 💌</h1>
+    <p>
+      Dear Love,<br><br>
+      I know I hurt you. I know things have been far from perfect and I failed to communicate when you needed me most.
+      But that was never because I stopped caring or loving you. In fact, I love you more deeply than ever, and losing
+      your smile, your voice, your love — it breaks me inside.<br><br>
+      I'm sorry for all the hurt I’ve caused. I don’t expect words to undo the past, but I want you to know I’m here —
+      learning, growing, and waiting for you. If you can find it in your heart to forgive me, I promise to never give
+      you a reason to regret it.<br><br>
+      Yours always,<br>
+      — Hardik 💔
+    </p>
+
+    <div class="question">
+      <h2>Do you accept the apology? 🥺</h2>
+      <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+      </div>
+      <div class="thank-you" id="thankYouMessage" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    emailjs.init("F60vb3M2C88nXe-V_");
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const thankYouMsg = document.getElementById("thankYouMessage");
+
+    // Make No button move randomly
+    noBtn.addEventListener("click", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.position = "fixed";
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+
+      thankYouMsg.innerText = "Thank you ❤️ That means the world to me.";
+      thankYouMsg.style.display = "block";
+
+      // Burst Effect
+      const rect = yesBtn.getBoundingClientRect();
+      for (let i = 0; i < 30; i++) {
+        const burst = document.createElement("div");
+        burst.classList.add("burst-emoji");
+        burst.innerText = ["💖", "💘", "🌸", "💗", "🫶", "❤️"][Math.floor(Math.random() * 6)];
+        burst.style.left = `${rect.left + rect.width / 2}px`;
+        burst.style.top = `${rect.top + rect.height / 2}px`;
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = Math.random() * 150 + 50;
+        burst.style.setProperty('--x', `${Math.cos(angle) * radius}px`);
+        burst.style.setProperty('--y', `${Math.sin(angle) * radius}px`);
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 1000);
+      }
+
+      // Rain Effect
+      for (let i = 0; i < 100; i++) {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.innerText = ["💖", "💘", "💗", "💝", "💕", "💞", "❤️", "🌸", "🌹", "🫶"][Math.floor(Math.random() * 10)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.fontSize = `${16 + Math.random() * 24}px`;
+        emoji.style.animationDuration = 2 + Math.random() * 3 + "s";
+        emoji.style.top = `-${Math.random() * 100}px`;
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 5000);
+      }
+
+      // Send Email
+      emailjs.send("service_gq18vyq", "template_8z8i1bl", {
+        to_email: "hardikvashisth2827@gmail.com",
+        message: "She clicked YES and accepted your apology 💖🥰"
+      }).then(res => {
+        console.log("Email sent!");
+      }).catch(err => {
+        console.error("Email failed", err);
+      });
+    });
+  </script>
+</body>
+</html>
